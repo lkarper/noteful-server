@@ -24,7 +24,7 @@ const FoldersService = {
             .delete();
     },
     updateFolder(knex, id, newFolderFields) {
-        return knex 
+        return knex('folders') 
             .where({ id })
             .update(newFolderFields);
     },

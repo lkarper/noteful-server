@@ -14,6 +14,16 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
+app.use(function validateBearerToken(req, res, next) {
+    const token = req.get('Authorization');
+    if (!token || token.split(' ')[1] !== process.env.API_TOKEN) {
+        return res.status(401).json({
+            error: 'unauthorized request'
+        });
+    }
+    next();
+});
+
 app.use('/api/folders', foldersRouter);
 app.use('/api/notes', notesRouter);
 
